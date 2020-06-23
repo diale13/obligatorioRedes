@@ -25,7 +25,7 @@ namespace Client
                 {
                     FrameHandler frameHandler = new FrameHandler(networkStream);
 
-                    var serverResponse = frameHandler.ReadDataAsync().Result;
+                    var serverResponse = await frameHandler.ReadDataAsync().ConfigureAwait(false);
                     var menu = Encoding.ASCII.GetString(serverResponse);
                     Console.WriteLine(menu);
 
@@ -37,7 +37,7 @@ namespace Client
                             keepConnection = false;
                             var exitFrame = Encoding.UTF8.GetBytes("REQFF0000");
                             frameHandler.SendMessageAsync(exitFrame);
-                            serverResponse = frameHandler.ReadDataAsync().Result;
+                            serverResponse = await frameHandler.ReadDataAsync().ConfigureAwait(false);
                             var asciiResponse = (Encoding.ASCII.GetString(serverResponse));
                             Console.WriteLine(asciiResponse);
                         }
@@ -45,7 +45,7 @@ namespace Client
                         {
                             var encodedFrame = Encoding.UTF8.GetBytes(frameToBeSent);
                             frameHandler.SendMessageAsync(encodedFrame);
-                            serverResponse = frameHandler.ReadDataAsync().Result;
+                            serverResponse = await frameHandler.ReadDataAsync().ConfigureAwait(false);
                             var asciiResponse = (Encoding.ASCII.GetString(serverResponse));
                             string[] separator = { "@" };
                             string[] splittedResponse = asciiResponse.Split(separator, StringSplitOptions.RemoveEmptyEntries);
@@ -58,7 +58,7 @@ namespace Client
                                 try
                                 {
                                     fileService.SendFile(splittedResponse[1]);
-                                    serverResponse = frameHandler.ReadDataAsync().Result;
+                                    serverResponse = await frameHandler.ReadDataAsync().ConfigureAwait(false);
                                     asciiResponse = (Encoding.ASCII.GetString(serverResponse));
                                     Console.WriteLine(asciiResponse);
                                 }
