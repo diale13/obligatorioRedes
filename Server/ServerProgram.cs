@@ -26,7 +26,7 @@ namespace Server
             var tcpListener = new TcpListener(ipEndPoint);
 
             tcpListener.Start(100);
-            Console.WriteLine("Server started listening connections on port " + SettingsMgr.ReadSetting(ServerConfig.ServerIpConfigKey));
+            Console.WriteLine("Server started listening connections on ip " + SettingsMgr.ReadSetting(ServerConfig.ServerIpConfigKey) + " and port " + SettingsMgr.ReadSetting(ServerConfig.SeverPortConfigKey));
             Console.WriteLine("Server will start displaying messages from the clients");
 
 
