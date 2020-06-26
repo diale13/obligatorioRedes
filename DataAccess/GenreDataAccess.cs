@@ -5,20 +5,22 @@ using Persistance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace DataAccess
 {
     public class GenreDataAccess : IGenreDataAccess
     {
         private List<Genre> genres = MemoryDataBase.GetInstance().Genres;
-        private readonly Object genreLock = new object();
+        private static SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
         ModifyQueue queue = ModifyQueue.GetInstance();
 
         public void Delete(Genre genreToDelete)
         {
             queue.ChckAndAddToGenreList(genreToDelete.Name);
-            lock (genreLock)
+            try
             {
+                semaphore.WaitAsync();
                 var indexToDelete = genres.FindIndex(gen => gen.Name.Equals(genreToDelete.Name));
                 if (indexToDelete == -1)
                 {
@@ -28,13 +30,22 @@ namespace DataAccess
 
                 genres.RemoveAt(indexToDelete);
             }
-            queue.RemoveGenreFromQueue(genreToDelete.Name);
+            finally
+            {
+                semaphore.Release();
+                queue.RemoveGenreFromQueue(genreToDelete.Name);
+            }
         }
         public List<Genre> GetGenres()
         {
-            lock (genreLock)
+            try
             {
+                semaphore.WaitAsync();
                 return genres;
+            }
+            finally
+            {
+                semaphore.Release();
             }
         }
 
@@ -46,8 +57,9 @@ namespace DataAccess
         public void Update(string genreName, Genre updatedGenre)
         {
             queue.ChckAndAddToGenreList(genreName);
-            lock (genreLock)
+            try
             {
+                semaphore.WaitAsync();
                 var indexToModify = genres.FindIndex(gen => gen.Name.Equals(genreName));
                 if (indexToModify == -1)
                 {
@@ -56,13 +68,19 @@ namespace DataAccess
                 }
                 genres[indexToModify] = updatedGenre;
             }
-            queue.RemoveGenreFromQueue(genreName);
+            finally
+            {
+                semaphore.Release();
+                queue.RemoveGenreFromQueue(genreName);
+            }
         }
 
         public void Upload(Genre genre)
         {
-            lock (genreLock)
+            try
             {
+                semaphore.WaitAsync();
+
                 if (IsNameUnique(genre.Name))
                 {
                     genres.Add(genre);
@@ -72,18 +90,27 @@ namespace DataAccess
                     throw new DataBaseException("Ya existe un genero con ese nombre");
                 }
             }
+            finally
+            {
+                semaphore.Release();
+            }
         }
 
         public Genre GetGenre(string name)
         {
-            lock (genreLock)
+            try
             {
+                semaphore.WaitAsync();
                 var indexToReturn = genres.FindIndex(gen => gen.Name.Equals(name));
                 if (indexToReturn == -1)
                 {
                     throw new DataBaseException("No se encontro el genero solicitado");
                 }
                 return genres[indexToReturn];
+            }
+            finally
+            {
+                semaphore.Release();
             }
         }
 
@@ -92,9 +119,5 @@ namespace DataAccess
             var validationInt = genres.FindIndex(gen => gen.Name.Equals(name));
             return (validationInt == -1);
         }
-
-
-
-
     }
 }

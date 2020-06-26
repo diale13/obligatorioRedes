@@ -1,10 +1,7 @@
 ﻿using DataAccess.Exceptions;
-using Domain;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace DataAccess
 {
@@ -18,10 +15,9 @@ namespace DataAccess
         private List<string> direcorNamesQueue;
 
 
-        private Object movieQueueLocker;
-        private Object genreQueueLocker;
-        private Object directorQueueLocker;
-
+        private static SemaphoreSlim movieSemaphore = new SemaphoreSlim(1, 1);
+        private static SemaphoreSlim genreSemaphore = new SemaphoreSlim(1, 1);
+        private static SemaphoreSlim directorSemaphore = new SemaphoreSlim(1, 1);
 
 
         private ModifyQueue()
@@ -29,17 +25,14 @@ namespace DataAccess
             this.genreNamesQueue = new List<string>();
             this.movieNamesQueue = new List<string>();
             this.direcorNamesQueue = new List<string>();
-
-            this.movieQueueLocker = new object();
-            this.genreQueueLocker = new object();
-            this.directorQueueLocker = new object();
         }
 
 
         public void ChckAndAddToMovieList(string movieToCheck)
         {
-            lock (movieQueueLocker)
+            try
             {
+                movieSemaphore.WaitAsync();
                 int indexToCheck = movieNamesQueue.FindIndex(movieNameInList => movieNameInList.Equals(movieToCheck));
                 if (indexToCheck == -1)
                 {
@@ -50,21 +43,31 @@ namespace DataAccess
                     throw new EntityBeingModifiedException("Se ingereso una pelicula que esta siendo modificada, espere unos minutos y vuelva a intentar");
                 }
             }
+            finally
+            {
+                movieSemaphore.Release();
+            }
         }
 
         public void RemoveMovieFromModifyQueue(string movieThatWasModified)
         {
-            lock (movieQueueLocker)
+            try
             {
+                movieSemaphore.WaitAsync();
                 this.movieNamesQueue.Remove(movieThatWasModified);
             }
-
+            finally
+            {
+                movieSemaphore.Release();
+            }
         }
 
         public void ChckAndAddToGenreList(string genreToCheck)
         {
-            lock (genreQueueLocker)
+            try
             {
+                genreSemaphore.WaitAsync();
+
                 int indexToCheck = genreNamesQueue.FindIndex(genreNameInList => genreNameInList.Equals(genreToCheck));
                 if (indexToCheck == -1)
                 {
@@ -75,20 +78,31 @@ namespace DataAccess
                     throw new EntityBeingModifiedException("Se ingereso un genero que esta siendo modificado, espere unos minutos y vuelva a intentar");
                 }
             }
+            finally
+            {
+                genreSemaphore.Release();
+            }
         }
 
         public void RemoveGenreFromQueue(string genreModified)
         {
-            lock (genreQueueLocker)
+
+            try
             {
+                genreSemaphore.WaitAsync();
                 this.genreNamesQueue.Remove(genreModified);
+            }
+            finally
+            {
+                genreSemaphore.Release();
             }
         }
 
         public void ChckAndAddToDirectorList(string directorToCheck)
         {
-            lock (directorQueueLocker)
+            try
             {
+                directorSemaphore.WaitAsync();
                 int indexToCheck = direcorNamesQueue.FindIndex(dirNameInList => dirNameInList.Equals(directorToCheck));
                 if (indexToCheck == -1)
                 {
@@ -99,13 +113,23 @@ namespace DataAccess
                     throw new EntityBeingModifiedException("Se ingereso un director que esta siendo modificado, espere unos minutos y vuelva a intentar");
                 }
             }
+            finally
+            {
+                directorSemaphore.Release();
+            }
         }
 
         public void RemoveDirectorFromQueue(string dirModified)
         {
-            lock (directorQueueLocker)
+
+            try
             {
+                directorSemaphore.WaitAsync();
                 this.direcorNamesQueue.Remove(dirModified);
+            }
+            finally
+            {
+                directorSemaphore.Release();
             }
         }
 

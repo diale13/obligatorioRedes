@@ -3,45 +3,43 @@ using Domain;
 using IDataAccess;
 using Persistance;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace DataAccess
 {
     public class AssociationHandler : IAsociationHandler
     {
         private ModifyQueue queue = ModifyQueue.GetInstance();
-        private object associationLock = new object();
-
+        private static SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
         private List<Genre> genres = MemoryDataBase.GetInstance().Genres;
         private List<Movie> movies = MemoryDataBase.GetInstance().Movies;
         private List<Director> directors = MemoryDataBase.GetInstance().Directors;
 
-
-
         public void UpdateMovieAndGenre(Movie mov, Genre gen)
         {
-            lock (associationLock)
+            var movieName = mov.Name;
+            var genreName = gen.Name;
+            try
             {
-                var movieName = mov.Name;
-                var genreName = gen.Name;
-                try
-                {
-                    queue.ChckAndAddToMovieList(movieName);
-                    queue.ChckAndAddToGenreList(genreName);
+                semaphore.WaitAsync();
+                queue.ChckAndAddToMovieList(movieName);
+                queue.ChckAndAddToGenreList(genreName);
 
-                    UpdateGenreAfterAsociation(gen);
-                    UpdateMovieAfterASociation(mov);
-                }
-                catch (EntityBeingModifiedException entitiyBeingMod)
-                {
-                    RemoveMovieAndGenreFromQueue(genreName, movieName);
-                    throw entitiyBeingMod;
-                }
-                catch (DataBaseException entityNotFound)
-                {
-                    RemoveMovieAndGenreFromQueue(genreName, movieName);
-                    throw entityNotFound;
-                }
+                UpdateGenreAfterAsociation(gen);
+                UpdateMovieAfterASociation(mov);
+            }
+            catch (EntityBeingModifiedException entitiyBeingMod)
+            {
+                throw entitiyBeingMod;
+            }
+            catch (DataBaseException entityNotFound)
+            {
+                throw entityNotFound;
+            }
+            finally
+            {
                 RemoveMovieAndGenreFromQueue(genreName, movieName);
+                semaphore.Release();
             }
         }
 
@@ -95,35 +93,32 @@ namespace DataAccess
 
         public void UpdateMovieDirector(Movie movie, Director director)
         {
-            lock (associationLock)
+            var movieName = movie.Name;
+            var dirName = director.Name;
+            try
             {
-                var movieName = movie.Name;
-                var dirName = director.Name;
-                try
-                {
-                    queue.ChckAndAddToMovieList(movieName);
-                    queue.ChckAndAddToDirectorList(dirName);
-                    
-                    UpdateMovieAfterASociation(movie);
-                    UpdateDirectorAfterAsociation(director);
-                   
-                }
-                catch (EntityBeingModifiedException entitiyBeingMod)
-                {
-                    RemoveDirectorAndMovieFromQueue(movieName, dirName);
-                    throw entitiyBeingMod;
-                }
-                catch (DataBaseException entityNotFound)
-                {
-                    RemoveDirectorAndMovieFromQueue(movieName, dirName);
-                    throw entityNotFound;
-                }
-                RemoveDirectorAndMovieFromQueue(movieName, dirName);
+                semaphore.WaitAsync();
+                queue.ChckAndAddToMovieList(movieName);
+                queue.ChckAndAddToDirectorList(dirName);
+
+                UpdateMovieAfterASociation(movie);
+                UpdateDirectorAfterAsociation(director);
+
             }
+            catch (EntityBeingModifiedException entitiyBeingMod)
+            {
+                throw entitiyBeingMod;
+            }
+            catch (DataBaseException entityNotFound)
+            {
+                throw entityNotFound;
+            }
+            finally
+            {
+                RemoveDirectorAndMovieFromQueue(movieName, dirName);
+                semaphore.Release();
+            }
+
         }
-
-
-        //TODO DIRECTOR AND MOVIE
-
     }
 }

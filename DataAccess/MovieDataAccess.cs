@@ -2,37 +2,43 @@
 using Domain;
 using IDataAccess;
 using Persistance;
-using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace DataAccess
 {
     public class MovieDataAccess : IMovieDataAccess
     {
         private List<Movie> movies = MemoryDataBase.GetInstance().Movies;
-        private readonly Object movieLock = new object();
+        private static SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
         ModifyQueue queue = ModifyQueue.GetInstance();
 
         public void Delete(Movie movie)
         {
             queue.ChckAndAddToMovieList(movie.Name);
-            lock (movieLock)
+            try
             {
+                semaphore.WaitAsync();
                 var indexToDelete = movies.FindIndex(mov => mov.Name.Equals(movie.Name));
                 if (indexToDelete == -1)
                 {
                     queue.RemoveMovieFromModifyQueue(movie.Name);
                     throw new DataBaseException("No se encontro la pelicula solicitada");
                 }
-                movies.RemoveAt(indexToDelete);                
+                movies.RemoveAt(indexToDelete);
             }
-            queue.RemoveMovieFromModifyQueue(movie.Name);
+            finally
+            {
+                semaphore.Release();
+                queue.RemoveMovieFromModifyQueue(movie.Name);
+            }
         }
 
         public Movie GetMovie(string movieName)
         {
-            lock (movieLock)
+            try
             {
+                semaphore.WaitAsync();
                 int indexToReturn = movies.FindIndex(mov => mov.Name.Equals(movieName));
                 if (indexToReturn == -1)
                 {
@@ -40,13 +46,18 @@ namespace DataAccess
                 }
                 return movies[indexToReturn];
             }
+            finally
+            {
+                semaphore.Release();
+            }
         }
 
         public void Update(string movieName, Movie updatedMovie)
         {
             queue.ChckAndAddToMovieList(movieName);
-            lock (movieLock)
+            try
             {
+                semaphore.WaitAsync();
                 var indexToModify = movies.FindIndex(mov => mov.Name.Equals(movieName));
                 if (indexToModify == -1)
                 {
@@ -55,14 +66,19 @@ namespace DataAccess
                 }
                 movies[indexToModify] = updatedMovie;
             }
-            queue.RemoveMovieFromModifyQueue(movieName);
+            finally
+            {
+                semaphore.Release();
+                queue.RemoveMovieFromModifyQueue(movieName);
+            }
         }
-              
+
 
         public void Upload(Movie mov)
         {
-            lock (movieLock)
+            try
             {
+                semaphore.WaitAsync();
                 var uniqueNameValidator = movies.FindIndex(movieInList => movieInList.Name.Equals(mov.Name));
                 if (IsNameUnique(mov.Name))
                 {
@@ -72,6 +88,10 @@ namespace DataAccess
                 {
                     throw new DataBaseException("Ya existe una pelicula con ese nombre");
                 }
+            }
+            finally
+            {
+                semaphore.Release();
             }
         }
 
@@ -83,9 +103,14 @@ namespace DataAccess
 
         public List<Movie> GetMovies()
         {
-            lock (movieLock)
+            try
             {
+                semaphore.WaitAsync();
                 return movies;
+            }
+            finally
+            {
+                semaphore.Release();
             }
         }
     }
