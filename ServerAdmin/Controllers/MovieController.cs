@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace ServerAdmin.Controllers
@@ -11,18 +7,11 @@ namespace ServerAdmin.Controllers
     public class MovieController : ApiController
     {
         [Route("")]
-        public IHttpActionResult Get()
+        public async Task<IHttpActionResult> GetAsync()
         {
-            return Ok("Todo Piolin");
+            await Task.Yield();
+            return Ok("Aca devolver una lista de peliculas paginadasss");
         }
-
-        [Route("{movieName}")]
-        public IHttpActionResult Get(string movieName)
-        {
-            return Ok("Todo Piolin queri");            
-        }
-
-
-
+        
     }
 }

@@ -9,10 +9,11 @@ namespace ServerAdmin
     {
         public static void Register(HttpConfiguration config)
         {
-            // Configuración y servicios de API web
-
-            // Rutas de API web
+            //Controller config
             config.MapHttpAttributeRoutes();
+
+            //General Filters
+            config.Filters.Add(new ValidateModelFilter());
         }
     }
 }
