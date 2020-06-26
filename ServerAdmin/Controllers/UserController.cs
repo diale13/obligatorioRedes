@@ -29,10 +29,10 @@ namespace ServerAdmin.Controllers
 
             return Ok(newUser);
 
-            return CreatedAtRoute(
-                "GetUserByName",
-                newUser.UserName,
-                $"#{newUser.ToString()}");
+            //return CreatedAtRoute(
+            //    "GetUserByName",
+            //    newUser.UserName,
+            //    $"#{newUser.ToString()}");
         }
 
 
