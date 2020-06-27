@@ -47,16 +47,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AsociationService.cs" />
+    <Compile Include="Obl1Services\AsociationService.cs" />
     <Compile Include="Exceptions\AsociatedClassException.cs" />
     <Compile Include="Exceptions\BussinesLogicException.cs" />
-    <Compile Include="ClientService.cs" />
-    <Compile Include="DirectorService.cs" />
-    <Compile Include="FileService.cs" />
-    <Compile Include="GenreService.cs" />
-    <Compile Include="MenuService.cs" />
-    <Compile Include="MovieService.cs" />
+    <Compile Include="Obl1Services\ClientService.cs" />
+    <Compile Include="Obl1Services\DirectorService.cs" />
+    <Compile Include="Obl1Services\FileService.cs" />
+    <Compile Include="Obl1Services\GenreService.cs" />
+    <Compile Include="Obl1Services\MenuService.cs" />
+    <Compile Include="Obl1Services\MovieService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RemotingServices\SessionService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

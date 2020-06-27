@@ -110,16 +110,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ServerAdmin.BussinesLogic\ServerAdmin.BussinesLogic.csproj">
-      <Project>{631EFC89-5242-46A3-ACCF-15A8B4CA7813}</Project>
-      <Name>ServerAdmin.BussinesLogic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ServerAdmin.InterfacesBussinesLogic\ServerAdmin.InterfacesBussinesLogic.csproj">
-      <Project>{BBD8020C-724F-4AA5-A019-883943F8686C}</Project>
-      <Name>ServerAdmin.InterfacesBussinesLogic</Name>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

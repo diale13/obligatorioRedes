@@ -47,13 +47,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IAsociationService.cs" />
-    <Compile Include="IDirectorService.cs" />
-    <Compile Include="IFileService.cs" />
-    <Compile Include="IGenreService.cs" />
-    <Compile Include="IMenuService.cs" />
-    <Compile Include="IMovieService.cs" />
-    <Compile Include="IClientService.cs" />
+    <Compile Include="ISessionService.cs" />
+    <Compile Include="Obl1Interfaces\IAsociationService.cs" />
+    <Compile Include="Obl1Interfaces\IDirectorService.cs" />
+    <Compile Include="Obl1Interfaces\IFileService.cs" />
+    <Compile Include="Obl1Interfaces\IGenreService.cs" />
+    <Compile Include="Obl1Interfaces\IMenuService.cs" />
+    <Compile Include="Obl1Interfaces\IMovieService.cs" />
+    <Compile Include="Obl1Interfaces\IClientService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +65,9 @@
       <Project>{59EB5F75-1AF4-4A15-9705-69FC9C1982B2}</Project>
       <Name>Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="RemotingInterfaces\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

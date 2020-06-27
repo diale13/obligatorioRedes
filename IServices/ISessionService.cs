@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ServerAdmin.InterfacesBussinesLogic
+namespace IServices
 {
     public interface ISessionService
     {

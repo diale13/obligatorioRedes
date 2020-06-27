@@ -1,6 +1,4 @@
-﻿using ServerAdmin.BussinesLogic;
-using ServerAdmin.InterfacesBussinesLogic;
-using ServerAdmin.Models;
+﻿using ServerAdmin.Models;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -10,7 +8,7 @@ namespace ServerAdmin.Controllers
     [RoutePrefix("Token")]
     public class TokenController : ApiController
     {
-        private readonly ISessionService sessionService = new SessionService();
+        
               
 
         [Route("", Name = "LogIn")]
