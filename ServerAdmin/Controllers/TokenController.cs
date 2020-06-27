@@ -3,6 +3,7 @@ using ServerAdmin.Models;
 using System;
 using System.Threading.Tasks;
 using System.Web.Http;
+using WebApi.Filters;
 
 namespace ServerAdmin.Controllers
 {
@@ -10,7 +11,6 @@ namespace ServerAdmin.Controllers
     [RoutePrefix("Token")]
     public class TokenController : ApiController
     {
-        
         [Route("", Name = "LogIn")]
         [HttpPost]
         public async Task<IHttpActionResult> LoginAsync([FromBody] UserLogInModel user)
@@ -20,19 +20,25 @@ namespace ServerAdmin.Controllers
             {
                 return BadRequest("User can not be empty");
             }
-            //Todo call blogic
-
+            if(user.NickName == "" || user.Password == "")
+            {
+                return BadRequest("Nor nickname nor password can be empty");
+            }
             var sessionLogic = (ISessionService)Activator.GetObject(
                typeof(ISessionService), "tcp://127.0.0.1:8500/SessionService");
             var token = sessionLogic.CreateToken(user.NickName, user.Password);
 
             return Ok(token);
 
+            
             //return CreatedAtRoute(
             //    "GetUserByName",
             //    newUser.UserName,
             //    $"#{newUser.ToString()}");
         }
+
+
+
 
         //[Route("", Name = "LogOut")]
         //[HttpPost]

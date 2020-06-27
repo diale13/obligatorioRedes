@@ -47,15 +47,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssociationHandler.cs" />
-    <Compile Include="ClientDataAccess.cs" />
-    <Compile Include="DirectorDataAccess.cs" />
+    <Compile Include="ApiUsersDataAccess.cs" />
+    <Compile Include="Obl1DataAccess\AssociationHandler.cs" />
+    <Compile Include="Obl1DataAccess\ClientDataAccess.cs" />
+    <Compile Include="Obl1DataAccess\DirectorDataAccess.cs" />
     <Compile Include="Exceptions\EntityBeingModifiedException.cs" />
     <Compile Include="Exceptions\DataBaseException.cs" />
-    <Compile Include="GenreDataAccess.cs" />
-    <Compile Include="MenuDataAccess.cs" />
-    <Compile Include="ModifyQueue.cs" />
-    <Compile Include="MovieDataAccess.cs" />
+    <Compile Include="Obl1DataAccess\GenreDataAccess.cs" />
+    <Compile Include="Obl1DataAccess\MenuDataAccess.cs" />
+    <Compile Include="Obl1DataAccess\ModifyQueue.cs" />
+    <Compile Include="Obl1DataAccess\MovieDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

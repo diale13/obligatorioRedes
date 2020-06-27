@@ -1,26 +1,50 @@
-﻿using IServices;
+﻿using DataAccess;
+using IDataAccess;
+using IServices;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Services
 {
     public class SessionService : MarshalByRefObject, ISessionService
     {
+        private IApiUsersDataAccess apiUsersDataAccess = new ApiUsersDataAccess();
+        private static IDictionary<string, string> TokenRepository = new Dictionary<string, string>();
+
         public Guid? CreateToken(string userName, string password)
         {
-            return new Guid();
-            throw new NotImplementedException();
+            if(userName == "admin" && password == "admin")
+            {
+                var tokens= Guid.NewGuid();
+                TokenRepository.Add(tokens.ToString(), password);
+                return tokens;
+            }
+
+
+            var users = apiUsersDataAccess.GetAll();
+            var user = users.FirstOrDefault(x => x.NickName == userName && x.Password == password);
+            if (user == null)
+            {
+                return null;
+            }
+            var token = Guid.NewGuid();
+            TokenRepository.Add(token.ToString(), user.NickName);
+            return token;
         }
 
         public bool DeleteLoggedUser(string token)
         {
+            if (!TokenRepository.Remove(token))
+            {
+                return false;
+            }
             return true;
-            throw new NotImplementedException();
         }
 
         public bool IsValidToken(string token)
         {
-            return true;
-            throw new NotImplementedException();
+            return TokenRepository.ContainsKey(token);
         }
     }
 }

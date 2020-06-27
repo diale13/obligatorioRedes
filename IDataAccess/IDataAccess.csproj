@@ -47,12 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IAsociationHandler.cs" />
-    <Compile Include="IClientDataAccess.cs" />
-    <Compile Include="IDirectorDataAccess.cs" />
-    <Compile Include="IGenreDataAccess.cs" />
-    <Compile Include="IMenuDataAccess.cs" />
-    <Compile Include="IMovieDataAccess.cs" />
+    <Compile Include="IApiUsersDataAccess.cs" />
+    <Compile Include="Obl1Interfaces\IAsociationHandler.cs" />
+    <Compile Include="Obl1Interfaces\IClientDataAccess.cs" />
+    <Compile Include="Obl1Interfaces\IDirectorDataAccess.cs" />
+    <Compile Include="Obl1Interfaces\IGenreDataAccess.cs" />
+    <Compile Include="Obl1Interfaces\IMenuDataAccess.cs" />
+    <Compile Include="Obl1Interfaces\IMovieDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

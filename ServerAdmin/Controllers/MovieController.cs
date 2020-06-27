@@ -1,11 +1,13 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
+using WebApi.Filters;
 
 namespace ServerAdmin.Controllers
 {
     [RoutePrefix("movie")]
     public class MovieController : ApiController
     {
+        [LogInFilter]
         [Route("")]
         public async Task<IHttpActionResult> GetAsync()
         {

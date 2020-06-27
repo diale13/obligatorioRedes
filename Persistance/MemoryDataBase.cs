@@ -16,10 +16,12 @@ namespace Persistance
         public List<Director> Directors { get; set; }
         public List<User> Users { get; set; }
         public int UserTokenCount { get; set; }
+        public List<ApiUser> ApiUsers { get; set; }
 
 
         private MemoryDataBase()
         {
+            this.ApiUsers = new List<ApiUser>();
             this.Genres = new List<Genre>();
             this.Movies = new List<Movie>();
             this.Directors = new List<Director>();
