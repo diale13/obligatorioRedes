@@ -9,7 +9,7 @@ namespace ServerAdmin.Models
     {
         [Required]
         [StringLength(100)]
-        public string UserName { get; set; }
+        public string NickName { get; set; }
         [Required]
         public DateTime BirthDay { get; set; }
 
@@ -32,7 +32,7 @@ namespace ServerAdmin.Models
 
         public override string ToString()
         {
-            return $"New user created with nick: {UserName}, Email: {Email} , and name {FirstName} {LastName}";
+            return $"New user created with nick: {NickName}, Email: {Email} , and name {FirstName} {LastName}";
         }
 
     }

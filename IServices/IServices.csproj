@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ISessionService.cs" />
+    <Compile Include="RemotingInterfaces\ISessionService.cs" />
     <Compile Include="Obl1Interfaces\IAsociationService.cs" />
     <Compile Include="Obl1Interfaces\IDirectorService.cs" />
     <Compile Include="Obl1Interfaces\IFileService.cs" />
@@ -66,8 +66,6 @@
       <Name>Domain</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="RemotingInterfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

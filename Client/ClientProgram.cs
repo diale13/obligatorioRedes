@@ -36,7 +36,7 @@ namespace Client
                         {
                             keepConnection = false;
                             var exitFrame = Encoding.UTF8.GetBytes("REQFF0000");
-                            frameHandler.SendMessageAsync(exitFrame);
+                            var tarea = frameHandler.SendMessageAsync(exitFrame);
                             serverResponse = await frameHandler.ReadDataAsync().ConfigureAwait(false);
                             var asciiResponse = (Encoding.ASCII.GetString(serverResponse));
                             Console.WriteLine(asciiResponse);
@@ -44,7 +44,7 @@ namespace Client
                         else
                         {
                             var encodedFrame = Encoding.UTF8.GetBytes(frameToBeSent);
-                            frameHandler.SendMessageAsync(encodedFrame);
+                            var tarea = frameHandler.SendMessageAsync(encodedFrame);
                             serverResponse = await frameHandler.ReadDataAsync().ConfigureAwait(false);
                             var asciiResponse = (Encoding.ASCII.GetString(serverResponse));
                             string[] separator = { "@" };

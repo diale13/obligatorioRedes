@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.Remoting;
+using System.Runtime.Remoting.Channels;
+using System.Runtime.Remoting.Channels.Tcp;
 using System.Text;
 using System.Threading.Tasks;
 using Common;
@@ -30,14 +33,31 @@ namespace Server
             Console.WriteLine("Server will start displaying messages from the clients");
 
 
-
-            Task serverFunctionsTask = Task.Run(() => ServerFunctions());
-
-            while (isServerUp)
+            var sessionServiceChannel = InitiateRemotingSessionService();
+            try
             {
-                var tcpClientSocket = await tcpListener.AcceptTcpClientAsync().ConfigureAwait(false);
-                var handleClientTask = Task.Run(async () => await HandleClient(tcpClientSocket).ConfigureAwait(false));
+                Task serverFunctionsTask = Task.Run(() => ServerFunctions());
+                while (isServerUp)
+                {
+                    var tcpClientSocket = await tcpListener.AcceptTcpClientAsync().ConfigureAwait(false);
+                    var handleClientTask = Task.Run(async () => await HandleClient(tcpClientSocket).ConfigureAwait(false));
+                }
             }
+            finally
+            {
+                ChannelServices.UnregisterChannel(sessionServiceChannel);
+            }
+        }
+
+        private static TcpChannel InitiateRemotingSessionService()
+        {
+            var tcpSessionChannel = new TcpChannel(8500);
+            ChannelServices.RegisterChannel(tcpSessionChannel, false);
+            RemotingConfiguration.RegisterWellKnownServiceType(
+                typeof(SessionService),
+                "SessionService",
+                WellKnownObjectMode.Singleton);
+            return tcpSessionChannel;
         }
 
         static void ServerFunctions()
