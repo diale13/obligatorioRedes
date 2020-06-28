@@ -1,64 +1,54 @@
 ﻿using IServices;
 using ServerAdmin.Models;
 using System;
+using System.Data;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
-using WebApi.Filters;
+using System.Web.Http.Results;
 
 namespace ServerAdmin.Controllers
 {
-
     [RoutePrefix("Token")]
     public class TokenController : ApiController
     {
+        private ISessionService sessionLogic;
+        public TokenController()
+        {
+            sessionLogic = (ISessionService)Activator.GetObject(
+         typeof(ISessionService), "tcp://127.0.0.1:8500/SessionService");
+        }
+
         [Route("", Name = "LogIn")]
         [HttpPost]
-        public async Task<IHttpActionResult> LoginAsync([FromBody] UserLogInModel user)
+        public async Task<IHttpActionResult> PostAsync([FromBody] UserLogInModel user)
         {
             await Task.Yield();
             if (user == null)
             {
                 return BadRequest("User can not be empty");
             }
-            if(user.NickName == "" || user.Password == "")
+            if (user.NickName == "" || user.Password == "")
             {
                 return BadRequest("Nor nickname nor password can be empty");
             }
-            var sessionLogic = (ISessionService)Activator.GetObject(
-               typeof(ISessionService), "tcp://127.0.0.1:8500/SessionService");
             var token = sessionLogic.CreateToken(user.NickName, user.Password);
-
-            return Ok(token);
-
-            
-            //return CreatedAtRoute(
-            //    "GetUserByName",
-            //    newUser.UserName,
-            //    $"#{newUser.ToString()}");
+            return new NegotiatedContentResult<string>(HttpStatusCode.Created, token.ToString(), this);
         }
 
+        [Route("", Name = "LogOut")]
+        [HttpDelete]
+        public async Task<IHttpActionResult> DeleteAsync([FromBody] UserLogOutModel logout)
+        {
+            await Task.Yield();
 
-
-
-        //[Route("", Name = "LogOut")]
-        //[HttpPost]
-        //public async Task<IHttpActionResult> LogOutAsync([FromBody] UserLogOutModel logout)
-        //{
-        //    await Task.Yield();
-        //    if (logout == null)
-        //    {
-        //        return BadRequest("User can not be empty");
-        //    }
-        //    //Todo call blogic
-        //    string token = "AAAAAAAAAAAAAAA";
-        //    return Ok(token);
-
-        //    //return CreatedAtRoute(
-        //    //    "GetUserByName",
-        //    //    newUser.UserName,
-        //    //    $"#{newUser.ToString()}");
-        //}
-
+            if (logout == null)
+            {
+                return BadRequest("Token was empty");
+            }
+            sessionLogic.DeleteLoggedUser(logout.Token);
+            return Ok("Logged out");
+        }
 
 
     }
