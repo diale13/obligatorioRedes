@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using DataAccess.Exceptions;
+using Domain;
 using IDataAccess;
 using Persistance;
 using System.Collections.Generic;
@@ -50,6 +51,24 @@ namespace DataAccess
             {
                 semaphore.WaitAsync();
                 return users;
+            }
+            finally
+            {
+                semaphore.Release();
+            }
+        }
+
+        public void Update(ApiUser userToUpdate)
+        {
+            try
+            {
+                semaphore.WaitAsync();
+                var indexToModify = users.FindIndex(gen => gen.NickName.Equals(userToUpdate.NickName));
+                if (indexToModify == -1)
+                {
+                    throw new DataBaseException("No se encontro el usuario solicitado");
+                }
+                users[indexToModify] = userToUpdate;
             }
             finally
             {

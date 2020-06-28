@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RemmotingManager.cs" />
     <Compile Include="ServerAsociationManager.cs" />
     <Compile Include="ServerConfig.cs" />
     <Compile Include="ServerDirectorManager.cs" />

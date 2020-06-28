@@ -8,5 +8,6 @@ namespace IDataAccess
         List<ApiUser> GetAll();
         ApiUser Get(string nickname);
         void Add(ApiUser userToAdd);
+        void Update(ApiUser userToUpdate);
     }
 }

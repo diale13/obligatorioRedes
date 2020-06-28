@@ -33,7 +33,8 @@ namespace Server
             Console.WriteLine("Server will start displaying messages from the clients");
 
 
-            var sessionServiceChannel = InitiateRemotingSessionService();
+            var sessionServiceChannel = RemmotingManager.InitiateRemotingSessionService();
+            var sessionApiUserServiceChannel = RemmotingManager.InitiateRemotingApiUserService();
             try
             {
                 Task serverFunctionsTask = Task.Run(() => ServerFunctions());
@@ -46,19 +47,9 @@ namespace Server
             finally
             {
                 ChannelServices.UnregisterChannel(sessionServiceChannel);
+                ChannelServices.UnregisterChannel(sessionApiUserServiceChannel);
             }
-        }
-
-        private static TcpChannel InitiateRemotingSessionService()
-        {
-            var tcpSessionChannel = new TcpChannel(8500);
-            ChannelServices.RegisterChannel(tcpSessionChannel, false);
-            RemotingConfiguration.RegisterWellKnownServiceType(
-                typeof(SessionService),
-                "SessionService",
-                WellKnownObjectMode.Singleton);
-            return tcpSessionChannel;
-        }
+        }        
 
         static void ServerFunctions()
         {
