@@ -3,6 +3,7 @@ using IServices;
 using ServerAdmin.Models;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using WebApi.Filters;
@@ -19,7 +20,6 @@ namespace ServerAdmin.Controllers
          typeof(IMovieRemotingService), "tcp://127.0.0.1:4200/movieService");
         }
 
-
         [LogInFilter]
         [Route("")]
         public async Task<IHttpActionResult> GetAsync()
@@ -33,6 +33,20 @@ namespace ServerAdmin.Controllers
             }
             return Ok(ret);
         }
-        
+
+        [LogInFilter]
+        [Route("{movieName}", Name = "GetMovieByName")]
+        public async Task<IHttpActionResult> GetMovieAsync(string movieName)
+        {
+            await Task.Yield();
+            var movie = movieLogic.GetMovie(movieName);
+            var ret = new MovieModel(movie);
+            if (ret == null)
+            {
+                return Content(HttpStatusCode.NotFound, $"No se encuentra la pelicula solicitada");
+            }
+            return Ok(ret);
+        }
+
     }
 }

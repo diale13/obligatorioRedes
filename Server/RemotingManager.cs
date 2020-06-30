@@ -38,7 +38,7 @@ namespace Server
             return apiUserServiceChannel;
         }
 
-        internal static TcpChannel InitiateRemotingMovieService()
+        public static TcpChannel InitiateRemotingMovieService()
         {
             var port = Int32.Parse(SettingsMgr.ReadSetting(ServerConfig.MovieServicePort));
 

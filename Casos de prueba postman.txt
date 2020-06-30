@@ -1,0 +1,33 @@
+POST NEW USER
+{
+    "NickName": "diale13",
+    "Email": "diegofranggi@gmail.com",
+    "BirthDay" :"1998/12/14",
+    "Password": "supersecure123.",
+    "FirstName": "Diego",
+    "LastName": "Franggi"
+}
+
+
+POST TOKEN (login)
+{
+    "NickName": "diale13",
+    "Password": "supersecure123."    
+}
+
+
+
+// HACER EN CLIENTE VIEJO
+
+REQAG9999Drama@Dramatico
+REQAG9999Horror@Te asusta
+REQAG9999Comedia@Da risa
+
+REQAP9999Parasite@2019-10-12@Bong Joon Ho@Drama
+REQAP9999Mi vida@1998-09-12@Diego Franggi@Horror#Drama#Comedia
+REQAP9999Killer Balloon@2020-04-12@Javier de Mattos@Drama#Horror
+
+GET ip/movie
+
+
+
