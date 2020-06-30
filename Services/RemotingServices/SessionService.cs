@@ -14,14 +14,6 @@ namespace Services
 
         public Guid? CreateToken(string userName, string password)
         {
-            if(userName == "admin" && password == "admin")
-            {
-                var tokens= Guid.NewGuid();
-                TokenRepository.Add(tokens.ToString(), password);
-                return tokens;
-            }
-
-
             var users = apiUsersDataAccess.GetAll();
             var user = users.FirstOrDefault(x => x.NickName == userName && x.Password == password);
             if (user == null)

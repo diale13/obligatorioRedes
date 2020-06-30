@@ -42,7 +42,9 @@ namespace ServerAdmin.Models
                 BirthDay = this.BirthDay,
                 FirstName = this.FirstName,
                 LastName = this.LastName,
-                Password = this.Password
+                Password = this.Password,
+                Email = this.Email
+
             };
             return entity;
         }

@@ -97,6 +97,7 @@
     <Compile Include="Models\UserLogInModel.cs" />
     <Compile Include="Models\UserLogOutModel.cs" />
     <Compile Include="Models\UserRegisterModel.cs" />
+    <Compile Include="Models\UserRetModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Middleware\ValidateModelFilter.cs" />
   </ItemGroup>

@@ -22,8 +22,9 @@ namespace ServerAdmin.Controllers
         public async Task<IHttpActionResult> GetAsync(string userName)
         {
             await Task.Yield();
-            var ret = userLogic.GetUser(userName);
-            return Ok(ret);
+            var created = userLogic.GetUser(userName);
+            var model = new UserRetModel(created);
+            return Ok(model);
         }
 
         [Route("")]
@@ -36,10 +37,8 @@ namespace ServerAdmin.Controllers
                 return BadRequest("User can not be empty");
             }
             userLogic.AddUser(newUser.ToEntity());
-            return CreatedAtRoute(
-                            "GetUserByName",
-                            newUser.NickName,
-                            $"#{newUser.ToString()}");
+
+            return Content(HttpStatusCode.Created, $"User created {newUser}");
         }
 
         [Route("")]

@@ -12,7 +12,8 @@ namespace WebApi.Filters
     {
         public override void OnActionExecuting(HttpActionContext context)
         {
-
+            var sessionLogic = (ISessionService)Activator.GetObject(
+        typeof(ISessionService), "tcp://127.0.0.1:8500/SessionService");
             var authToken = context.Request.Headers.Authorization;
             if (authToken == null)
             {
@@ -21,8 +22,6 @@ namespace WebApi.Filters
                                         "Please add authorization token");
                 return;
             }
-            var sessionLogic = (ISessionService)Activator.GetObject(
-             typeof(ISessionService), "tcp://127.0.0.1:8500/SessionService");
             var isTokenValid = sessionLogic.IsValidToken(authToken.ToString());
             if (!isTokenValid)
             {

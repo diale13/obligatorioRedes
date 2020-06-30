@@ -30,7 +30,6 @@ namespace Server
             Console.WriteLine("Server started listening connections on ip " + SettingsMgr.ReadSetting(ServerConfig.ServerIpConfigKey) + " and port " + SettingsMgr.ReadSetting(ServerConfig.SeverPortConfigKey));
             Console.WriteLine("Server will start displaying messages from the clients");
 
-
             var sessionServiceChannel = RemmotingManager.InitiateRemotingSessionService();
             var sessionApiUserServiceChannel = RemmotingManager.InitiateRemotingApiUserService();
             try
