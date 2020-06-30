@@ -30,9 +30,9 @@ namespace Server
             Console.WriteLine("Server started listening connections on ip " + SettingsMgr.ReadSetting(ServerConfig.ServerIpConfigKey) + " and port " + SettingsMgr.ReadSetting(ServerConfig.SeverPortConfigKey));
             Console.WriteLine("Server will start displaying messages from the clients");
 
-            var sessionServiceChannel = RemmotingManager.InitiateRemotingSessionService();
-            var apiUserServiceChannel = RemmotingManager.InitiateRemotingApiUserService();
-            var movieServiceChannel = RemmotingManager.InitiateRemotingMovieService();
+            var sessionServiceChannel = RemotingManager.InitiateRemotingSessionService();
+            var apiUserServiceChannel = RemotingManager.InitiateRemotingApiUserService();
+            var movieServiceChannel = RemotingManager.InitiateRemotingMovieService();
 
             try
             {

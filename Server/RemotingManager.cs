@@ -11,7 +11,7 @@ using System.Runtime.Serialization.Formatters;
 
 namespace Server
 {
-    public static class RemmotingManager
+    public static class RemotingManager
     {
         static readonly ISettingsManager SettingsMgr = new SettingsManager();
         public static TcpChannel InitiateRemotingSessionService()

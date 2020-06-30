@@ -15,7 +15,7 @@ namespace ServerAdmin.Controllers
         public UserController()
         {
             userLogic = (IApiUserService)Activator.GetObject(
-         typeof(IApiUserService), "tcp://192.168.56.1:6969/ApiUserService");
+         typeof(IApiUserService), "tcp://127.0.0.1:6969/ApiUserService");
         }
 
         [Route("{userName}", Name = "GetUserByName")]
