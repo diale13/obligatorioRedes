@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LogService.cs" />
     <Compile Include="RemotingServices\ApiUserService.cs" />
     <Compile Include="Obl1Services\AsociationService.cs" />
     <Compile Include="Exceptions\AsociatedClassException.cs" />

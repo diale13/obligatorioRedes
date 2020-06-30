@@ -52,6 +52,7 @@
     <Compile Include="ApiUser.cs" />
     <Compile Include="Movie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerEvent.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
