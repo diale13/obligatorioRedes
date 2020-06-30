@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RemotingInterfaces\IMovieRemotingService.cs" />
     <Compile Include="RemotingInterfaces\IApiUserService.cs" />
     <Compile Include="RemotingInterfaces\ISessionService.cs" />
     <Compile Include="Obl1Interfaces\IAsociationService.cs" />

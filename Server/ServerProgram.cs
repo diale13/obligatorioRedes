@@ -31,7 +31,9 @@ namespace Server
             Console.WriteLine("Server will start displaying messages from the clients");
 
             var sessionServiceChannel = RemmotingManager.InitiateRemotingSessionService();
-            var sessionApiUserServiceChannel = RemmotingManager.InitiateRemotingApiUserService();
+            var apiUserServiceChannel = RemmotingManager.InitiateRemotingApiUserService();
+            var movieServiceChannel = RemmotingManager.InitiateRemotingMovieService();
+
             try
             {
                 Task serverFunctionsTask = Task.Run(() => ServerFunctions());
@@ -44,9 +46,10 @@ namespace Server
             finally
             {
                 ChannelServices.UnregisterChannel(sessionServiceChannel);
-                ChannelServices.UnregisterChannel(sessionApiUserServiceChannel);
+                ChannelServices.UnregisterChannel(apiUserServiceChannel);
+                ChannelServices.UnregisterChannel(movieServiceChannel);
             }
-        }        
+        }
 
         static void ServerFunctions()
         {

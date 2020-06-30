@@ -1,6 +1,7 @@
 ﻿using Common;
 using Common.Interfaces;
 using Services;
+using Services.RemotingServices;
 using System;
 using System.Collections;
 using System.Runtime.Remoting;
@@ -16,7 +17,7 @@ namespace Server
         public static TcpChannel InitiateRemotingSessionService()
         {
             var port = Int32.Parse(SettingsMgr.ReadSetting(ServerConfig.SessionServicePort));
-            var tcpSessionChannel = (TcpChannel)GetChannel("sessionChannel",port, false);
+            var tcpSessionChannel = (TcpChannel)GetChannel("sessionChannel", port, false);
             ChannelServices.RegisterChannel(tcpSessionChannel, false);
             RemotingConfiguration.RegisterWellKnownServiceType(
                 typeof(SessionService),
@@ -37,15 +38,32 @@ namespace Server
             return apiUserServiceChannel;
         }
 
-        public static IChannel GetChannel(string name,int tcpPort, bool isSecure)
+        internal static TcpChannel InitiateRemotingMovieService()
+        {
+            var port = Int32.Parse(SettingsMgr.ReadSetting(ServerConfig.MovieServicePort));
+
+            var movieServiceChannel = (TcpChannel)GetChannel("movieServiceChannel", port, false);
+            ChannelServices.RegisterChannel(movieServiceChannel, false);
+            RemotingConfiguration.RegisterWellKnownServiceType(
+                typeof(MovieRemotingService),
+                "movieService",
+                WellKnownObjectMode.Singleton);
+            return movieServiceChannel;
+        }
+
+        public static IChannel GetChannel(string name, int tcpPort, bool isSecure)
         {
             BinaryServerFormatterSinkProvider serverProv =
-                new BinaryServerFormatterSinkProvider();
-            serverProv.TypeFilterLevel = TypeFilterLevel.Full;
-            IDictionary propBag = new Hashtable();
-            propBag["port"] = tcpPort;
-            propBag["typeFilterLevel"] = TypeFilterLevel.Full;
-            propBag["name"] = name;
+                new BinaryServerFormatterSinkProvider
+                {
+                    TypeFilterLevel = TypeFilterLevel.Full
+                };
+            IDictionary propBag = new Hashtable
+            {
+                ["port"] = tcpPort,
+                ["typeFilterLevel"] = TypeFilterLevel.Full,
+                ["name"] = name
+            };
             if (isSecure)
             {
                 propBag["secure"] = isSecure;

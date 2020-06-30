@@ -6,5 +6,6 @@
         public static string SeverPortConfigKey = "ServerPort";
         public static string SessionServicePort = "SessionServicePort";
         public static string ApiUserServicePort = "ApiUserServicePort";
+        public static string MovieServicePort = "MovieServicePort";
     }
 }
