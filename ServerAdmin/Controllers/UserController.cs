@@ -11,7 +11,7 @@ namespace ServerAdmin.Controllers
     [RoutePrefix("User")]
     public class UserController : ApiController
     {
-        private IApiUserService userLogic;
+        private readonly IApiUserService userLogic;
         public UserController()
         {
             userLogic = (IApiUserService)Activator.GetObject(
@@ -35,10 +35,7 @@ namespace ServerAdmin.Controllers
             {
                 return BadRequest("User can not be empty");
             }
-
-            //Mapear modelo a entidad
             userLogic.AddUser(newUser.ToEntity());
-
             return CreatedAtRoute(
                             "GetUserByName",
                             newUser.NickName,
@@ -77,7 +74,7 @@ namespace ServerAdmin.Controllers
             {
                 return Content(HttpStatusCode.NotFound, "User was not found in database");
             }
-            return Ok("Updated");
+            return Ok("Deleted");
         }
 
 
