@@ -75,5 +75,26 @@ namespace DataAccess
                 semaphore.Release();
             }
         }
+
+        public void Delete(string nickname, string password)
+        {
+            try
+            {
+                semaphore.WaitAsync();
+                var indexToDelete = users.FindIndex(u => u.NickName.Equals(nickname) && u.Password.Equals(password));
+                if (indexToDelete == -1)
+                {
+                    throw new DataBaseException("No se encontro el usuario solicitado");
+                }
+                users.RemoveAt(indexToDelete);
+            }
+            finally
+            {
+                semaphore.Release();
+            }
+
+        }
+
+
     }
 }

@@ -28,7 +28,7 @@ namespace Server
         public static TcpChannel InitiateRemotingApiUserService()
         {
             var port = Int32.Parse(SettingsMgr.ReadSetting(ServerConfig.ApiUserServicePort));
-            var apiUserServiceChannel = (TcpChannel)(TcpChannel)GetChannel("apiUserChannel", port, false);
+            var apiUserServiceChannel = (TcpChannel)GetChannel("apiUserChannel", port, false);
             ChannelServices.RegisterChannel(apiUserServiceChannel, false);
             RemotingConfiguration.RegisterWellKnownServiceType(
                 typeof(ApiUserService),

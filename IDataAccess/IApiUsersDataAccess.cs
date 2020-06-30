@@ -9,5 +9,6 @@ namespace IDataAccess
         ApiUser Get(string nickname);
         void Add(ApiUser userToAdd);
         void Update(ApiUser userToUpdate);
+        void Delete(string nickname, string password);
     }
 }

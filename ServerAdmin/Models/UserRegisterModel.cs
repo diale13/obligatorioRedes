@@ -5,7 +5,7 @@ using System.Web.Security;
 
 namespace ServerAdmin.Models
 {
-    public class UserRegisterModel : ApiUser
+    public class UserCompleteModel
     {
         [Required]
         [StringLength(100)]
@@ -18,14 +18,14 @@ namespace ServerAdmin.Models
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]     
+        [Required]
         [MembershipPassword]
         public string Password { get; set; }
 
         [Required]
         [StringLength(100)]
         public string FirstName { get; set; }
-        
+
         [Required]
         [StringLength(100)]
         public string LastName { get; set; }
@@ -33,6 +33,18 @@ namespace ServerAdmin.Models
         public override string ToString()
         {
             return $"Nick: {NickName}, Email: {Email} , and name {FirstName} {LastName}";
+        }
+        public ApiUser ToEntity()
+        {
+            ApiUser entity = new ApiUser
+            {
+                NickName = this.NickName,
+                BirthDay = this.BirthDay,
+                FirstName = this.FirstName,
+                LastName = this.LastName,
+                Password = this.Password
+            };
+            return entity;
         }
 
     }
