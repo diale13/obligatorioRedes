@@ -7,5 +7,7 @@ namespace IServices
     {
         List<Movie> GetAllMovies();
         Movie GetMovie(string name);
+        bool AddOrUpdateRating(string moviename, string nickName, int rating);
+        bool RemoveRating(string movieName, string nickName);
     }
 }

@@ -93,9 +93,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Middleware\LogInFilter.cs" />
-    <Compile Include="Models\FavoriteMovieModelIn.cs" />
+    <Compile Include="Models\Movie\FavoriteMovieModelIn.cs" />
     <Compile Include="Models\Movie\MovieModelOut.cs" />
     <Compile Include="Models\Rating\RatingModel.cs" />
+    <Compile Include="Models\Rating\RemoveRatingModel.cs" />
     <Compile Include="Models\User\UserLogInModel.cs" />
     <Compile Include="Models\User\UserLogOutModel.cs" />
     <Compile Include="Models\User\UserRegisterModel.cs" />

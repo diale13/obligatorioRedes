@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Runtime.Remoting.Contexts;
 using System.Threading.Tasks;
 using System.Web.Http;
 using WebApi.Filters;
@@ -36,7 +35,6 @@ namespace ServerAdmin.Controllers
             return Ok(model);
         }
 
-
         [Route("")]
         [HttpPost]
         public async Task<IHttpActionResult> PostAsync([FromBody] UserCompleteModel newUser)
@@ -46,8 +44,11 @@ namespace ServerAdmin.Controllers
             {
                 return BadRequest("User can not be empty");
             }
-            userLogic.AddUser(newUser.ToEntity());
-
+            var wasAded = userLogic.AddUser(newUser.ToEntity());
+            if (!wasAded)
+            {
+                return Content(HttpStatusCode.Accepted, $"Username {newUser.NickName} is already taken");
+            }
             return Content(HttpStatusCode.Created, $"User created {newUser}");
         }
 
@@ -70,6 +71,7 @@ namespace ServerAdmin.Controllers
 
         [LogInFilter]
         [HttpDelete]
+        [Route("")]
         public async Task<IHttpActionResult> Delete([FromBody] UserLogInModel userToDelete)
         {
             await Task.Yield();
@@ -109,7 +111,7 @@ namespace ServerAdmin.Controllers
             await Task.Yield();
             if (userName == null || movie == null)
             {
-                return BadRequest("Nor user nor movie can not be empty");
+                return BadRequest("Nor user nor movie can be empty");
             }
             var token = Request.Headers.Authorization.ToString();
             var isCorrectUser = CheckIfSessionIsCorrect(userName, token);
@@ -126,14 +128,14 @@ namespace ServerAdmin.Controllers
         }
 
         [LogInFilter]
-        [Route("{userName}/favoriteMovies", Name = "AddFavMovie")]
+        [Route("{userName}/favoriteMovies", Name = "RemoveFavMovie")]
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteFavMovieAsync(string userName, [FromBody] FavoriteMovieModelIn movie)
         {
             await Task.Yield();
             if (userName == null || movie == null)
             {
-                return BadRequest("Nor user nor movie can not be empty");
+                return BadRequest("Nor user nor movie can be empty");
             }
             var token = Request.Headers.Authorization.ToString();
             var isCorrectUser = CheckIfSessionIsCorrect(userName, token);
@@ -154,7 +156,7 @@ namespace ServerAdmin.Controllers
             var sessionLogic = (ISessionService)Activator.GetObject(
            typeof(ISessionService), "tcp://127.0.0.1:8500/SessionService");
             var ownerOfToken = sessionLogic.GetUserByToken(token);
-            if(ownerOfToken != userName)
+            if (ownerOfToken != userName)
             {
                 return false;
             }
