@@ -9,5 +9,7 @@ namespace IServices
         Guid? CreateToken(string userName, string password);
 
         bool DeleteLoggedUser(string token);
+
+        string GetUserByToken(string token);
     }
 }

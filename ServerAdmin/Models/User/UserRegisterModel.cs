@@ -1,5 +1,6 @@
 ﻿using Domain;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Security;
 
@@ -43,8 +44,8 @@ namespace ServerAdmin.Models
                 FirstName = this.FirstName,
                 LastName = this.LastName,
                 Password = this.Password,
-                Email = this.Email
-
+                Email = this.Email,
+                FavoriteMovies = new List<string>()
             };
             return entity;
         }

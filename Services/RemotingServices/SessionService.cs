@@ -38,5 +38,15 @@ namespace Services
         {
             return TokenRepository.ContainsKey(token);
         }
+
+        public string GetUserByToken(string token)
+        {
+            if (IsValidToken(token))
+            {
+                return TokenRepository[token];
+            }
+            return "null";
+        }
+           
     }
 }
