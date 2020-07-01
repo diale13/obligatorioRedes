@@ -13,9 +13,18 @@ namespace Services
         private IApiUsersDataAccess usersDataAccess = new ApiUsersDataAccess();
         private IMovieDataAccess movieDataAccess = new MovieDataAccess();
 
-        public void AddUser(ApiUser user)
+        public bool AddUser(ApiUser user)
         {
-            usersDataAccess.Add(user);
+            try
+            {
+                usersDataAccess.Add(user);
+                return true;
+            }
+            catch (DataBaseException)
+            {
+                return false;
+            }
+
         }
 
         public bool DeleteUser(string nicknName, string password)

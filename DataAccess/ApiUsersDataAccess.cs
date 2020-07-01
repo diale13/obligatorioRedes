@@ -17,6 +17,13 @@ namespace DataAccess
             try
             {
                 semaphore.WaitAsync();
+                foreach (var user in users)
+                {
+                    if (user.NickName.Equals(userToAdd.NickName))
+                    {
+                        throw new DataBaseException("Ya existe el usuario");
+                    }
+                }
                 users.Add(userToAdd);
             }
             finally

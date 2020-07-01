@@ -11,6 +11,7 @@ namespace ServerAdmin.Models
         public List<string> Genres { get; set; }
         public DateTime Date { get; set; }
         public string Director { get; set; }
+        public int Rating { get; set; }
 
 
         public MovieModel(Movie mov)
@@ -19,6 +20,7 @@ namespace ServerAdmin.Models
             Director = mov.Director;
             Genres = mov.Genres;
             Date = mov.Date;
+            Rating = mov.TotalRating;  
         }
     }
 }
