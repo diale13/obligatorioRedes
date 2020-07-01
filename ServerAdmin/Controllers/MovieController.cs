@@ -42,13 +42,28 @@ namespace ServerAdmin.Controllers
         {
             await Task.Yield();
             var movie = movieLogic.GetMovie(movieName);
-            var ret = new MovieModel(movie);
-            if (ret == null)
+            if (movie == null)
             {
                 return Content(HttpStatusCode.NotFound, $"No se encuentra la pelicula solicitada");
             }
+            var ret = new MovieModel(movie);
             return Ok(ret);
         }
+
+        [LogInFilter]
+        [Route("{moviename}/rating", Name = "getRating")]
+        public async Task<IHttpActionResult> GetRatingAsync(string movieName)
+        {
+            await Task.Yield();
+            var movie = movieLogic.GetMovie(movieName);
+            if (movie == null)
+            {
+                return Content(HttpStatusCode.NotFound, $"No se encuentra la pelicula solicitada");
+            }
+            var ret = new MovieModel(movie);
+            return Ok(ret.Rating);
+        }
+
 
 
         [LogInFilter]
@@ -72,10 +87,10 @@ namespace ServerAdmin.Controllers
             {
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.NotFound, "The movie does not exist in our servers"));
             }
-            return Ok("Updated favorite movie list!");
+            return Ok("Rating posted");
         }
 
-        
+
         [LogInFilter]
         [Route("{moviename}/rating", Name = "updateRating")]
         [HttpPut]
@@ -106,7 +121,7 @@ namespace ServerAdmin.Controllers
             {
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.NotFound, "The movie does not exist in our servers"));
             }
-            return Ok("Updated favorite movie list");
+            return Ok("Vote removed");
         }
 
 

@@ -20,6 +20,14 @@ namespace Services
             {
                 return null;
             }
+
+            foreach (var pair in TokenRepository)
+            {
+                if (pair.Value.Equals(userName)){
+                    return new Guid(pair.Key);
+                }
+            }
+
             var token = Guid.NewGuid();
             TokenRepository.Add(token.ToString(), user.NickName);
             return token;
