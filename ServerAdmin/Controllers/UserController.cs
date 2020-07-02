@@ -82,7 +82,7 @@ namespace ServerAdmin.Controllers
             var wasDeleted = userLogic.DeleteUser(userToDelete.NickName, userToDelete.Password);
             if (!wasDeleted)
             {
-                return NotFound();
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.NotFound, "The user does not exist in our servers"));
             }
             return Ok("Deleted");
         }

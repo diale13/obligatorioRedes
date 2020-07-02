@@ -51,6 +51,19 @@ namespace Server
             return movieServiceChannel;
         }
 
+        public static TcpChannel InitiateLogService()
+        {
+            var port = Int32.Parse(SettingsMgr.ReadSetting(ServerConfig.LogServicePort));
+            var logServiceChannel = (TcpChannel)GetChannel("logServiceChannel", port, false);
+            ChannelServices.RegisterChannel(logServiceChannel, false);
+            RemotingConfiguration.RegisterWellKnownServiceType(
+                typeof(LogService),
+                "logService",
+                WellKnownObjectMode.Singleton);
+            return logServiceChannel;
+        }
+
+
         public static IChannel GetChannel(string name, int tcpPort, bool isSecure)
         {
             BinaryServerFormatterSinkProvider serverProv =

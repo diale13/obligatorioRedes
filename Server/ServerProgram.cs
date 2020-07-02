@@ -33,6 +33,7 @@ namespace Server
             var sessionServiceChannel = RemotingManager.InitiateRemotingSessionService();
             var apiUserServiceChannel = RemotingManager.InitiateRemotingApiUserService();
             var movieServiceChannel = RemotingManager.InitiateRemotingMovieService();
+            var logServiceChannel = RemotingManager.InitiateLogService();
 
             try
             {
@@ -48,6 +49,7 @@ namespace Server
                 ChannelServices.UnregisterChannel(sessionServiceChannel);
                 ChannelServices.UnregisterChannel(apiUserServiceChannel);
                 ChannelServices.UnregisterChannel(movieServiceChannel);
+                ChannelServices.UnregisterChannel(logServiceChannel);
             }
         }
 
