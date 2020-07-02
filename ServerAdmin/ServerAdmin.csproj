@@ -123,10 +123,6 @@
       <Project>{59EB5F75-1AF4-4A15-9705-69FC9C1982B2}</Project>
       <Name>Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\IDataAccess\IDataAccess.csproj">
-      <Project>{18D71137-1444-40E8-AD1C-B5A3E15646A1}</Project>
-      <Name>IDataAccess</Name>
-    </ProjectReference>
     <ProjectReference Include="..\IServices\IServices.csproj">
       <Project>{BEE07931-7854-4352-B8E6-971462E25BDC}</Project>
       <Name>IServices</Name>
