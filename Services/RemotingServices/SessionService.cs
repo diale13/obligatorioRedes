@@ -1,6 +1,7 @@
 ﻿using DataAccess;
 using IDataAccess;
 using IServices;
+using Services.LogServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace Services
     {
         private IApiUsersDataAccess apiUsersDataAccess = new ApiUsersDataAccess();
         private static IDictionary<string, string> TokenRepository = new Dictionary<string, string>();
+        private LoggerAssist loger = new LoggerAssist();
 
         public Guid? CreateToken(string userName, string password)
         {
@@ -30,6 +32,10 @@ namespace Services
 
             var token = Guid.NewGuid();
             TokenRepository.Add(token.ToString(), user.NickName);
+
+            var action = $"{userName} loged in";
+            loger.EventCreator("LOGIN", action);
+
             return token;
         }
 

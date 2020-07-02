@@ -125,7 +125,6 @@ namespace ServerAdmin.Controllers
         }
 
 
-
         private bool CheckIfSessionIsCorrect(string userName, string token)
         {
             var sessionLogic = (ISessionService)Activator.GetObject(
@@ -137,11 +136,6 @@ namespace ServerAdmin.Controllers
             }
             return true;
         }
-
-
-
-
-
 
     }
 }

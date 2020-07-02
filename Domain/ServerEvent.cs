@@ -7,5 +7,6 @@ namespace Domain
     {
         public string EventType { get; set; }
         public string LogBody { get; set; }
+        public DateTime Time { get; set; }
     }
 }

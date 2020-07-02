@@ -57,7 +57,7 @@ namespace Server
             var logServiceChannel = (TcpChannel)GetChannel("logServiceChannel", port, false);
             ChannelServices.RegisterChannel(logServiceChannel, false);
             RemotingConfiguration.RegisterWellKnownServiceType(
-                typeof(LogService),
+                typeof(RemotingLogService),
                 "logService",
                 WellKnownObjectMode.Singleton);
             return logServiceChannel;

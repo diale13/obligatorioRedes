@@ -18,6 +18,7 @@ namespace Server
     {
         static readonly ISettingsManager SettingsMgr = new SettingsManager();
         static bool isServerUp = true;
+
         static async Task Main(string[] args)
         {
             Console.WriteLine("Server is starting...");
@@ -170,6 +171,9 @@ namespace Server
                 IFrameHandler frameHandler = new FrameHandler(networkStream);
 
                 ICodification<HeaderStructure> header = new Header();
+               
+                var logManager = new SenderService();
+                int logSize = 0;
 
                 HeaderStructure headerStructure = header.Decode(frame);
 
@@ -179,93 +183,111 @@ namespace Server
                 }
 
                 var command = headerStructure.CommandType;
-
+                
                 switch (command)
                 {
                     case CommandType.AG:
                         ServerGenreManager.UploadGenre(frame);
                         ServerResponse(frameHandler, "Genre Uploaded");
+                        logSize = 2;
                         break;
 
                     case CommandType.BG:
                         ServerGenreManager.DeleteGenre(frame);
                         ServerResponse(frameHandler, "Genre Deleted");
+                        logSize = 1;
                         break;
 
                     case CommandType.MG:
                         ServerGenreManager.ModifyGenre(frame);
                         ServerResponse(frameHandler, "Genre modified");
+                        logSize = 3;
                         break;
 
                     case CommandType.AP:
                         ServerMovieManager.Upload(frame);
                         ServerResponse(frameHandler, "Movie uploaded");
+                        logSize = 3;
                         break;
 
                     case CommandType.BP:
                         ServerMovieManager.Delete(frame);
                         ServerResponse(frameHandler, "Movie deleted");
+                        logSize = 1;
                         break;
 
                     case CommandType.MP:
                         ServerMovieManager.Modify(frame);
                         ServerResponse(frameHandler, "Movie updated");
+                        logSize = 4;
                         break;
 
                     case CommandType.AS:
                         ServerAsociationManager.AsociateGenreToMovie(frame);
                         ServerResponse(frameHandler, "Movie and genre associated");
+                        logSize = 2;
                         break;
 
                     case CommandType.DS:
                         ServerAsociationManager.DeAsociateGenreToMovie(frame);
                         ServerResponse(frameHandler, "Movie and genre deassociated");
+                        logSize = 2;
                         break;
 
                     case CommandType.AD:
                         ServerDirectorManager.UploadDirector(frame);
                         ServerResponse(frameHandler, "Director uploaded");
+                        logSize = 4;
                         break;
 
                     case CommandType.BD:
                         ServerDirectorManager.DeleteDirector(frame);
                         ServerResponse(frameHandler, "Director deleted");
+                        logSize = 1;
                         break;
 
                     case CommandType.MD:
                         ServerDirectorManager.ModifyDirector(frame);
                         ServerResponse(frameHandler, "Director updated");
+                        logSize = 5;
                         break;
 
                     case CommandType.SA:
                         string fileName = ServerMovieManager.SaveFile(frame, networkStream);
                         ServerResponse(frameHandler, "Sending file...@" + fileName);
                         ServerMovieManager.ReceiveFile(networkStream);
+                        logSize = 2;
                         ServerResponse(frameHandler, "File sent");
                         break;
 
                     case CommandType.DM:
                         ServerAsociationManager.AsociateDirectorToMovie(frame);
                         ServerResponse(frameHandler, "Director and movie asociated");
+                        logSize = 2;
                         break;
 
                     case CommandType.DD:
                         ServerAsociationManager.DeAsociateDirectorToMovie(frame);
                         ServerResponse(frameHandler, "Director and movie deasociated");
+                        logSize = 2;
                         break;
 
                     case CommandType.FF:
                         ServerResponse(frameHandler, "Goodbye");
+                        logSize = 1;
                         return false;
 
                     default:
                         ServerResponse(frameHandler, "Formato de trama invalido vuelva a enviar");
                         break;
-                }
+                }                
+                logManager.CreateLog(command.ToString().ToUpper(), frame, logSize);
                 return true;
             }
             catch (Exception ex)
             {
+                var logManager = new SenderService();
+                logManager.CreateLog("EX", frame, 1);
                 if (ex is FormatException || ex is ArgumentException)
                 {
                     IFrameHandler frameHandler = new FrameHandler(networkStream);

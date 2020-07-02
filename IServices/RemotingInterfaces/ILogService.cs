@@ -6,7 +6,6 @@ namespace IServices
     public interface ILogService
     {
         void CreateLog(ServerEvent log);
-        List<string> GetLog(string filter);
-
+        List<ServerEvent> GetLog(string filter);
     }
 }
