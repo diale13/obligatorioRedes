@@ -13,12 +13,12 @@ namespace ServerAdmin.Controllers
     [RoutePrefix("User")]
     public class UserController : ApiController
     {
-        private readonly IApiUserService userLogic;
+        private readonly IApiUserService userLogic;   
 
         public UserController()
         {
             userLogic = (IApiUserService)Activator.GetObject(
-         typeof(IApiUserService), "tcp://127.0.0.1:6969/ApiUserService");
+         typeof(IApiUserService), ApiConfig.ApiUserServiceIp);
         }
 
         [Route("{userName}", Name = "GetUserByName")]
@@ -154,7 +154,7 @@ namespace ServerAdmin.Controllers
         private bool CheckIfSessionIsCorrect(string userName, string token)
         {
             var sessionLogic = (ISessionService)Activator.GetObject(
-           typeof(ISessionService), "tcp://127.0.0.1:8500/SessionService");
+           typeof(ISessionService), ApiConfig.SessionServiceIp);
             var ownerOfToken = sessionLogic.GetUserByToken(token);
             if (ownerOfToken != userName)
             {

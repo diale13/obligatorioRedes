@@ -19,7 +19,7 @@ namespace ServerAdmin.Controllers
         public MovieController()
         {
             movieLogic = (IMovieRemotingService)Activator.GetObject(
-         typeof(IMovieRemotingService), "tcp://127.0.0.1:4200/movieService");
+         typeof(IMovieRemotingService), ApiConfig.MovieServiceIp);
         }
 
         [LogInFilter]
@@ -129,7 +129,7 @@ namespace ServerAdmin.Controllers
         private bool CheckIfSessionIsCorrect(string userName, string token)
         {
             var sessionLogic = (ISessionService)Activator.GetObject(
-           typeof(ISessionService), "tcp://127.0.0.1:8500/SessionService");
+           typeof(ISessionService), ApiConfig.SessionServiceIp);
             var ownerOfToken = sessionLogic.GetUserByToken(token);
             if (ownerOfToken != userName)
             {

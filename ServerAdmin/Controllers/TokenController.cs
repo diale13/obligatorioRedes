@@ -16,7 +16,7 @@ namespace ServerAdmin.Controllers
         public TokenController()
         {
             sessionLogic = (ISessionService)Activator.GetObject(
-         typeof(ISessionService), "tcp://127.0.0.1:8500/SessionService");
+         typeof(ISessionService), ApiConfig.SessionServiceIp);
         }
 
         [Route("", Name = "LogIn")]
