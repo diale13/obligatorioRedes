@@ -115,6 +115,10 @@ namespace Services
         public List<Movie> GetFavMovies(string nickName)
         {
             var user = usersDataAccess.Get(nickName);
+            if(user == null)
+            {
+                return new List<Movie>();
+            }
             var favMovieNames = user.FavoriteMovies;
             var listOfActualMovies = new List<Movie>();
             foreach (var name in favMovieNames)

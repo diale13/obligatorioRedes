@@ -1,6 +1,7 @@
 ﻿using IServices;
 using ServerAdmin;
 using System;
+using System.Configuration;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http.Controllers;
@@ -14,7 +15,7 @@ namespace WebApi.Filters
         public override void OnActionExecuting(HttpActionContext context)
         {
             var sessionLogic = (ISessionService)Activator.GetObject(
-        typeof(ISessionService), ApiConfig.SessionServiceIp);
+        typeof(ISessionService), ConfigurationManager.AppSettings["SessionServiceIp"]);
             var authToken = context.Request.Headers.Authorization;
             if (authToken == null)
             {

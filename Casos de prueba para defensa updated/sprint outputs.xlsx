@@ -1,0 +1,447 @@
+{
+	"info": {
+		"_postman_id": "1d69b81b-20b8-4a54-940f-d3e0166d75c2",
+		"name": "Pruebas de Redes Obl2",
+		"description": "Aca estan las pruebas de mi api\r\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Prueba de get user franggi",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "a7934b45-2407-4e1b-9872-d6da897d0de3",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44387/user/diale13",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44387",
+					"path": [
+						"user",
+						"diale13"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post usuario franggi",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"NickName\": \"diale13\",\r\n    \"Email\": \"diegofranggi@gmail.com\",\r\n    \"BirthDay\" :\"1998/12/14\",\r\n    \"Password\": \"supersecure128.\",\r\n    \"FirstName\": \"Diego\",\r\n    \"LastName\": \"Franggi\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44387/user",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44387",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LogIn",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bbfdeae5-d136-468f-9f59-7eb2586c6356",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"NickName\": \"diale13\",  \r\n    \"Password\": \"supersecure128.\"   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44387/Token",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44387",
+					"path": [
+						"Token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get franggis fav movies",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "85b1db7b-f4cd-46e9-8af5-24f9d596becf",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:44387/user/diale13/favoriteMovies",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44387",
+					"path": [
+						"user",
+						"diale13",
+						"favoriteMovies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete usuario franggi",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "7dfb1fda-5ac1-4a93-8da2-180e9f4a2a41",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"NickName\": \"diale13\",  \r\n    \"Password\": \"supersecure128.\"   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44387/User",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44387",
+					"path": [
+						"User"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all movies",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "85b1db7b-f4cd-46e9-8af5-24f9d596becf",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:44387/movie",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44387",
+					"path": [
+						"movie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get logs",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "85b1db7b-f4cd-46e9-8af5-24f9d596becf",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:44387/log",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44387",
+					"path": [
+						"log"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get log filter",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "85b1db7b-f4cd-46e9-8af5-24f9d596becf",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:44387/log/LOGIN",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44387",
+					"path": [
+						"log",
+						"LOGIN"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Movie Rating",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "85b1db7b-f4cd-46e9-8af5-24f9d596becf",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:44387/movie/Parasite/rating",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44387",
+					"path": [
+						"movie",
+						"Parasite",
+						"rating"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User diale13 votes movie",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"NickName\" : \"diale13\",\r\n    \"Rating\" : \"10\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44387/movie/Parasite/rating",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44387",
+					"path": [
+						"movie",
+						"Parasite",
+						"rating"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post user Juan",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"NickName\": \"genericJuan\",\r\n    \"Email\": \"juan123@gmail.com\",\r\n    \"BirthDay\" :\"1998/12/14\",\r\n    \"Password\": \"supersecure128.\",\r\n    \"FirstName\": \"Juan\",\r\n    \"LastName\": \"Sanchez\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44387/user",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44387",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Diale13 votes for juan",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"NickName\" : \"genericJuan\",\r\n    \"Rating\" : \"10\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44387/movie/Parasite/rating",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44387",
+					"path": [
+						"movie",
+						"Parasite",
+						"rating"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User diale13 adds parasite to favs",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "85b1db7b-f4cd-46e9-8af5-24f9d596becf",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"MovieName\" : \"Parasite\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44387/user/diale13/favoriteMovies",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44387",
+					"path": [
+						"user",
+						"diale13",
+						"favoriteMovies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "diale13 favorites",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove from diale13 favs parasite",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "85b1db7b-f4cd-46e9-8af5-24f9d596becf",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"MovieName\" : \"Parasite\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44387/user/diale13/favoriteMovies",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44387",
+					"path": [
+						"user",
+						"diale13",
+						"favoriteMovies"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

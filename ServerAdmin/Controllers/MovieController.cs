@@ -4,6 +4,7 @@ using ServerAdmin.Models;
 using ServerAdmin.Models.Rating;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace ServerAdmin.Controllers
         public MovieController()
         {
             movieLogic = (IMovieRemotingService)Activator.GetObject(
-         typeof(IMovieRemotingService), ApiConfig.MovieServiceIp);
+         typeof(IMovieRemotingService), ConfigurationManager.AppSettings["MovieServiceIp"]);
         }
 
         [LogInFilter]
@@ -128,7 +129,7 @@ namespace ServerAdmin.Controllers
         private bool CheckIfSessionIsCorrect(string userName, string token)
         {
             var sessionLogic = (ISessionService)Activator.GetObject(
-           typeof(ISessionService), ApiConfig.SessionServiceIp);
+           typeof(ISessionService), ConfigurationManager.AppSettings["SessionServiceIp"]);
             var ownerOfToken = sessionLogic.GetUserByToken(token);
             if (ownerOfToken != userName)
             {

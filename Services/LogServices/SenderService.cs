@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Messaging;
 using IServices;
+using System.Configuration;
 
 namespace Services
 {
@@ -16,7 +17,8 @@ namespace Services
 
         public SenderService()
         {
-            queue = new MessageQueue(PathConfig.PATH) { Formatter = new XmlMessageFormatter(new[] { typeof(ServerEvent) }) };
+            string queuePath = @".\private$\PruebaDefensa";
+            queue = new MessageQueue(queuePath) { Formatter = new XmlMessageFormatter(new[] { typeof(ServerEvent) }) };
         }
 
         public void CreateApiLog(ServerEvent e)

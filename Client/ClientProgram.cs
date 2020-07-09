@@ -80,8 +80,9 @@ namespace Client
             }
             catch (Exception)
             {
-                Console.WriteLine("Ha ocurrido un error de conexion verifique su app config o que el servidor este levantado");
+				Console.WriteLine("Error de conexion o de trama verifique nuevamente su mensaje");
                 Console.ReadLine();
+                await Main(null);
             }
         }
 

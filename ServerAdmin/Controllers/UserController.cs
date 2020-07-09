@@ -2,10 +2,12 @@
 using ServerAdmin.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.UI.WebControls;
 using WebApi.Filters;
 
 namespace ServerAdmin.Controllers
@@ -13,12 +15,12 @@ namespace ServerAdmin.Controllers
     [RoutePrefix("User")]
     public class UserController : ApiController
     {
-        private readonly IApiUserService userLogic;   
+        private readonly IApiUserService userLogic;
 
         public UserController()
         {
             userLogic = (IApiUserService)Activator.GetObject(
-         typeof(IApiUserService), ApiConfig.ApiUserServiceIp);
+         typeof(IApiUserService), ConfigurationManager.AppSettings["ApiUserServiceIp"]);
         }
 
         [Route("{userName}", Name = "GetUserByName")]
@@ -95,6 +97,10 @@ namespace ServerAdmin.Controllers
             await Task.Yield();
 
             var movies = userLogic.GetFavMovies(userName);
+            if(movies.Count == 0)
+            {
+                return Content(HttpStatusCode.NotFound, "The user may not exist or he has no favorite movies");
+            }
             var movieNames = new List<string>();
             foreach (var movie in movies)
             {
@@ -154,7 +160,7 @@ namespace ServerAdmin.Controllers
         private bool CheckIfSessionIsCorrect(string userName, string token)
         {
             var sessionLogic = (ISessionService)Activator.GetObject(
-           typeof(ISessionService), ApiConfig.SessionServiceIp);
+           typeof(ISessionService), ConfigurationManager.AppSettings["SessionServiceIp"]);
             var ownerOfToken = sessionLogic.GetUserByToken(token);
             if (ownerOfToken != userName)
             {

@@ -6,6 +6,7 @@ using System.Web.Http;
 using WebApi.Filters;
 using Domain;
 using ServerAdmin.Models;
+using System.Configuration;
 
 namespace ServerAdmin.Controllers
 {
@@ -17,7 +18,7 @@ namespace ServerAdmin.Controllers
         public LogController()
         {
             logService = (ILogService)Activator.GetObject(
-         typeof(ILogService), ApiConfig.LogServiceIP);
+         typeof(ILogService), ConfigurationManager.AppSettings["LogServiceIP"]);
         }
 
         [Route("")]

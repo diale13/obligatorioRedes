@@ -1,6 +1,7 @@
 ﻿using IServices;
 using ServerAdmin.Models;
 using System;
+using System.Configuration;
 using System.Data;
 using System.Net;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace ServerAdmin.Controllers
         public TokenController()
         {
             sessionLogic = (ISessionService)Activator.GetObject(
-         typeof(ISessionService), ApiConfig.SessionServiceIp);
+         typeof(ISessionService), ConfigurationManager.AppSettings["SessionServiceIp"]);
         }
 
         [Route("", Name = "LogIn")]
