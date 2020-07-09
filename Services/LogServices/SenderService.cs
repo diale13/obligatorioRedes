@@ -17,7 +17,7 @@ namespace Services
 
         public SenderService()
         {
-            string queuePath = @".\private$\PruebaDefensa";
+            string queuePath = @"FormatName:Direct=TCP:192.168.1.47\private$\DefenseRemote";
             queue = new MessageQueue(queuePath) { Formatter = new XmlMessageFormatter(new[] { typeof(ServerEvent) }) };
         }
 

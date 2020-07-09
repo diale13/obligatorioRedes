@@ -9,5 +9,6 @@ namespace QueueStarter
     public static class PATH
     {
         public static string QueuePath { get; set; }
+        //192.168.56.1
     }
 }
